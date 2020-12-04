@@ -897,9 +897,10 @@ public class Camera {
   
 
   public void startPreviewWithImageStream(EventChannel imageStreamChannel)
-      throws CameraAccessException {
-    createCaptureSession(CameraDevice.TEMPLATE_RECORD, imageStreamReader.getSurface());
-
+      throws CameraAccessException {   
+    if (pictureImageReader != null){ // <= add this line as @elviskuo07 mentioned.
+        createCaptureSession(CameraDevice.TEMPLATE_RECORD, imageStreamReader.getSurface());
+   
     imageStreamChannel.setStreamHandler(
         new EventChannel.StreamHandler() {
           @Override
@@ -912,6 +913,7 @@ public class Camera {
             imageStreamReader.setOnImageAvailableListener(null, null);
           }
         });
+      }
   }
 
   private void setImageStreamImageAvailableListener(final EventChannel.EventSink imageStreamSink) {
