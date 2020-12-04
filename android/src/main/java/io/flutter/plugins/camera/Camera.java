@@ -890,8 +890,11 @@ public class Camera {
   }
 
   public void startPreview() throws CameraAccessException {
-    createCaptureSession(CameraDevice.TEMPLATE_PREVIEW, pictureImageReader.getSurface());
+    if (pictureImageReader != null) // <= add this line as @elviskuo07 mentioned.
+        createCaptureSession(CameraDevice.TEMPLATE_PREVIEW, pictureImageReader.getSurface());
   }
+
+  
 
   public void startPreviewWithImageStream(EventChannel imageStreamChannel)
       throws CameraAccessException {
